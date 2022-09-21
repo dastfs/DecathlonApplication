@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DecathlonTest {
     @Test
     void test(){
-        assertEquals("Decathlon test", DecathlonApplication.getName());
 
     }
 }

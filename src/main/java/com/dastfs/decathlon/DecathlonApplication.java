@@ -1,31 +1,53 @@
 package com.dastfs.decathlon;
 
-import com.dastfs.decathlon.model.Athlete;
-import com.dastfs.decathlon.model.DecathlonResult;
-import com.dastfs.decathlon.service.FileParserImpl;
-import com.dastfs.decathlon.service.IFileParser;
+import com.dastfs.decathlon.exception.InvalidArgumentException;
+import com.dastfs.decathlon.model.AthletePerformance;
+import com.dastfs.decathlon.model.AthleteResult;
+import com.dastfs.decathlon.service.calculator.Calculator;
+import com.dastfs.decathlon.service.calculator.iaaf.CalculatorIAAF;
+import com.dastfs.decathlon.service.decathlon.DecathlonScore;
+import com.dastfs.decathlon.service.file.export.FileExporter;
+import com.dastfs.decathlon.service.file.export.FileExporterXML;
+import com.dastfs.decathlon.service.file.parse.csv.FileParserCsv;
+import com.dastfs.decathlon.service.file.Parser;
+import com.dastfs.decathlon.service.file.read.FileReadService;
 
 import java.util.List;
 
 public class DecathlonApplication {
 
-    private static IFileParser fileParser;
-    private static DecathlonResult decathlonResult;
+    private final Parser parser;
+    private final DecathlonScore decathlonScore;
+    private final FileExporter exporter;
 
     DecathlonApplication() {
-        fileParser = new FileParserImpl();
+        parser = new FileParserCsv(new FileReadService());
+        Calculator calculator = new CalculatorIAAF();
+        decathlonScore = new DecathlonScore(calculator);
+        exporter = new FileExporterXML();
     }
 
     public static void main(String[] args) {
+        filePathCheck(args);
         DecathlonApplication decathlonApplication = new DecathlonApplication();
-        decathlonApplication.start();
+        decathlonApplication.start(args);
     }
 
-    private void start(){
-        List<Athlete> athleteList = fileParser.getAthleteList("");
+    private static void filePathCheck(String[] args) {
+        if(args.length < 1){
+            throw new InvalidArgumentException("Argument {file_input_path} is missed");
+        }
+
+        if(args.length < 2){
+            throw new InvalidArgumentException("Argument {file_output_path} is missed");
+        }
+
 
     }
-    public static String getName(){
-        return "Decathlon test";
+
+    private void start(String [] args){
+        List<AthletePerformance> athletePerformances = parser.parseAthletesRecords(args[0]);
+        List<AthleteResult> decathlonResult = decathlonScore.getAthletesResults(athletePerformances);
+        exporter.export(decathlonResult, args[1]);
     }
 }

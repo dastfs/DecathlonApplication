@@ -1,29 +1,30 @@
 package com.dastfs.decathlon.model;
 
-public class Athlete {
-    private String name;
-    private double run100m;
-    private double longJump;
-    private double shotJump;
-    private double highJump;
-    private double run400m;
-    private double hurdles110m;
-    private double throwDiscus;
-    private double poleVault;
-    private double throwJavelin;
-    private double run1500m;
+public class AthletePerformance {
+    private final String name;
+    private final double run100m;
+    private final double shotPut;
+    private final double highJump;
+    private final double run400m;
+    private final double longJump;
+    private final double run110mHurdles;
+    private final double discusThrow;
+    private final double poleVault;
+    private final double javelinThrow;
+    private final double run1500m;
+    private int result;
 
-    public Athlete(AthleteBuilder athleteBuilder) {
+    private AthletePerformance(AthleteBuilder athleteBuilder) {
         this.name = athleteBuilder.name;
         this.run100m = athleteBuilder.run100m;
         this.longJump = athleteBuilder.longJump;
-        this.shotJump = athleteBuilder.shotJump;
+        this.shotPut = athleteBuilder.shotPut;
         this.highJump = athleteBuilder.highJump;
         this.run400m = athleteBuilder.run400m;
-        this.hurdles110m = athleteBuilder.hurdles110m;
-        this.throwDiscus = athleteBuilder.throwDiscus;
+        this.run110mHurdles = athleteBuilder.run110mHurdles;
+        this.discusThrow = athleteBuilder.discusThrow;
         this.poleVault = athleteBuilder.poleVault;
-        this.throwJavelin = athleteBuilder.throwJavelin;
+        this.javelinThrow = athleteBuilder.javelinThrow;
         this.run1500m = athleteBuilder.run1500m;
     }
 
@@ -39,8 +40,8 @@ public class Athlete {
         return longJump;
     }
 
-    public double getShotJump() {
-        return shotJump;
+    public double getShotPut() {
+        return shotPut;
     }
 
     public double getHighJump() {
@@ -51,37 +52,45 @@ public class Athlete {
         return run400m;
     }
 
-    public double getHurdles110m() {
-        return hurdles110m;
+    public double getRun110mHurdles() {
+        return run110mHurdles;
     }
 
-    public double getThrowDiscus() {
-        return throwDiscus;
+    public double getDiscusThrow() {
+        return discusThrow;
     }
 
     public double getPoleVault() {
         return poleVault;
     }
 
-    public double getThrowJavelin() {
-        return throwJavelin;
+    public double getJavelinThrow() {
+        return javelinThrow;
     }
 
     public double getRun1500m() {
         return run1500m;
     }
 
+    public void setResult(int result) {
+        this.result = result;
+    }
+
+    public int getResult() {
+        return result;
+    }
+
     public static class AthleteBuilder {
-        private String name;
+        private final String name;
         private double run100m;
         private double longJump;
-        private double shotJump;
+        private double shotPut;
         private double highJump;
         private double run400m;
-        private double hurdles110m;
-        private double throwDiscus;
+        private double run110mHurdles;
+        private double discusThrow;
         private double poleVault;
-        private double throwJavelin;
+        private double javelinThrow;
         private double run1500m;
 
         public AthleteBuilder(String name) {
@@ -92,14 +101,12 @@ public class Athlete {
             this.run100m = run100m;
             return this;
         }
-
-        public AthleteBuilder shotJump(double shotJump) {
-            this.shotJump = shotJump;
-            return this;
-        }
-
         public AthleteBuilder longJump(double longJump) {
             this.longJump = longJump;
+            return this;
+        }
+        public AthleteBuilder shotPut(double shotPut) {
+            this.shotPut = shotPut;
             return this;
         }
         public AthleteBuilder highJump(double highJump) {
@@ -110,20 +117,20 @@ public class Athlete {
             this.run400m = run400m;
             return this;
         }
-        public AthleteBuilder hurdles110m(double hurdles110m) {
-            this.hurdles110m = hurdles110m;
+        public AthleteBuilder run110mHurdles(double run110mHurdles) {
+            this.run110mHurdles = run110mHurdles;
             return this;
         }
-        public AthleteBuilder throwDiscus(double throwDiscus) {
-            this.throwDiscus = throwDiscus;
+        public AthleteBuilder discusThrow(double discusThrow) {
+            this.discusThrow = discusThrow;
             return this;
         }
         public AthleteBuilder poleVault(double poleVault) {
             this.poleVault = poleVault;
             return this;
         }
-        public AthleteBuilder throwJavelin(double throwJavelin) {
-            this.throwJavelin = throwJavelin;
+        public AthleteBuilder javelinThrow(double javelinThrow) {
+            this.javelinThrow = javelinThrow;
             return this;
         }
         public AthleteBuilder run1500m(double run1500m) {
@@ -131,13 +138,10 @@ public class Athlete {
             return this;
         }
 
-        public Athlete build(){
-            Athlete athlete = new Athlete(this);
-            return athlete;
+        public AthletePerformance build(){
+            return new AthletePerformance(this);
         }
-
     }
-
 
     @Override
     public String toString() {
@@ -145,28 +149,14 @@ public class Athlete {
                 "name='" + name + '\'' +
                 ", run100m=" + run100m +
                 ", longJump=" + longJump +
-                ", shotJump=" + shotJump +
+                ", shotJump=" + shotPut +
                 ", highJump=" + highJump +
                 ", run400m=" + run400m +
-                ", hurdles110m=" + hurdles110m +
-                ", throwDiscus=" + throwDiscus +
+                ", hurdles110m=" + run110mHurdles +
+                ", throwDiscus=" + discusThrow +
                 ", poleVault=" + poleVault +
-                ", throwJavelin=" + throwJavelin +
+                ", throwJavelin=" + javelinThrow +
                 ", run1500m=" + run1500m +
                 '}';
     }
 }
-
-/*
-*
-100 m	10.395	10.827	11.278	11.756	Seconds
-Long jump	7.76	7.36	6.94	6.51	Metres
-Shot put	18.40	16.79	15.16	13.53	Metres
-High jump	2.20	2.10	1.99	1.88	Metres
-400 m	46.17	48.19	50.32	52.58	Seconds
-110 m hurdles	13.80	14.59	15.419	16.29	Seconds
-Discus throw	56.17	51.4	46.59	41.72	Metres
-Pole vault	5.28	4.96	4.63	4.29	Metres
-Javelin throw	77.19	70.67	64.09	57.45	Metres
-1500 m	3:53.79	4:07.42	4:21.77	4:36.96	Minutes:Seconds
-* */
