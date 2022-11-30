@@ -22,6 +22,3 @@ Go to jar file location
 
 Run the program with 2 parameters: input file path, output file path 
 > java -jar decathlon-1.0-SNAPSHOT.jar {input_file} {output_file}
-
-
-
